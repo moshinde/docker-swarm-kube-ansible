@@ -5,11 +5,11 @@ pipeline{
             steps{
                 echo 'Building currency exchange service'
                dir('currency-exchange-service') {
-                   sh "mvn clean install"
+                   sh "mvn clean install -DskipTests"
                     }
                 echo 'Building currency conversion service'
                 dir('currency-conversion-service') {
-                   sh "mvn clean install"
+                   sh "mvn clean install -DskipTests"
                     }
             }
         }
@@ -35,3 +35,5 @@ pipeline{
     }
     
 }
+
+

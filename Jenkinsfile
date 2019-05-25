@@ -5,11 +5,11 @@ pipeline{
             steps{
                 echo 'Building currency exchange service'
                dir('currency-exchange-service') {
-                   bat "mvn clean install"
+                   sh "mvn clean install"
                     }
                 echo 'Building currency conversion service'
                 dir('currency-conversion-service') {
-                   bat "mvn clean install"
+                   sh "mvn clean install"
                     }
             }
         }
@@ -20,17 +20,18 @@ pipeline{
             }
         }
         
-        stage('Deploy'){
+        stage('Build Docker Image'){
             steps{
-                bat('del "C:\\monica\\sharedVirtual\\docker\\*.war" /s /f /q')
-                echo 'Copy currency-exchange-service WAR file'
-                bat("xcopy .\\currency-exchange-service\\target\\*.war C:\\monica\\sharedVirtual\\docker\\exchange\\target")
-                echo 'Copy currency-conversion-service WAR file'
-                bat("xcopy .\\currency-conversion-service\\target\\*.war C:\\monica\\sharedVirtual\\docker\\conversion\\target")
+                script {
+                    dir('currency-exchange-service'){
+                        exchange_image=docker.Build("monicashinde3/currency-exchange-service:${env.BUILD_ID}")
+                    }
+                    dir('currency-conversion-service'){
+                        conversion_image=docker.Build("monicashinde3/currency-conversion-service:${env.BUILD_ID}")
+                    }
+                }
             }
         }
     }
     
 }
-
-

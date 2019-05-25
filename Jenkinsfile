@@ -24,10 +24,10 @@ pipeline{
             steps{
                 script {
                     dir('currency-exchange-service'){
-                        exchange_image=docker.build("monicashinde3/currency-exchange-service:${env.BUILD_ID}")
+                        exchange_image=docker.build("monicashinde3/currency-exchange-service")
                     }
                     dir('currency-conversion-service'){
-                        conversion_image=docker.build("monicashinde3/currency-conversion-service:${env.BUILD_ID}")
+                        conversion_image=docker.build("monicashinde3/currency-conversion-service")
                     }
                 }
             }
@@ -40,6 +40,14 @@ pipeline{
                         exchange_image.push()
                         conversion_image.push()
                     }
+                }
+            }
+        }
+
+        stage('Deploy in container'){
+            steps{
+                script{
+                    sh 'docker-compose up -d'
                 }
             }
         }

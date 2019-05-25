@@ -32,6 +32,15 @@ pipeline{
                 }
             }
         }
+
+        stage('Push to Docker hub'){
+            steps{
+                docker.withRegistry('https://hub.docker.com/', 'docker-hub-user'){
+                    exchange_image.push()
+                    conversion_image.push()
+                }
+            }
+        }
     }
     
 }

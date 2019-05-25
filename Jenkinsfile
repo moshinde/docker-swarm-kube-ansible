@@ -36,7 +36,7 @@ pipeline{
         stage('Push to Docker hub'){
             steps{
                 script {
-                    docker.withRegistry('https://hub.docker.com/', 'docker-hub-user'){
+                    withDockerRegistry([ credentialsId: "docker-hub-user", url: "" ]){
                         exchange_image.push()
                         conversion_image.push()
                     }

@@ -1,0 +1,45 @@
+version: '2'
+services:
+  dbserver:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=Margery@123
+      - MYSQL_DATABASE=currency
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      gameOfContainers:
+        ipv4_address: 172.16.14.211
+
+  currency-exchange-service:
+    image: monicashinde3/currency-exchange-service
+    ports:
+      - "8300:8300"
+    networks:
+      gameOfContainers:
+        ipv4_address: 172.16.15.111
+
+  currency-conversion-service:
+    image: monicashinde3/currency-conversion-service
+    ports:
+      - "8400:8400"
+    environment:
+      - SQL_HOST_IP=172.16.14.211
+      - SQL_PORT=3306
+      - SQL_DB=currency
+      - SQL_PWD=Margery@123
+      - EXCHANGE_SERVICE_HOST=172.16.15.111
+    networks:
+      gameOfContainers:
+        ipv4_address: 172.16.15.112
+
+networks:
+  gameOfContainers:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/16
+volumes:
+  mysql-data:

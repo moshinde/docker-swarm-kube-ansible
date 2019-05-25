@@ -5,7 +5,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=Margery@123
+      - MYSQL_ROOT_PASSWORD=*****
       - MYSQL_DATABASE=currency
     volumes:
       - mysql-data:/var/lib/mysql
@@ -29,7 +29,7 @@ services:
       - SQL_HOST_IP=172.16.14.211
       - SQL_PORT=3306
       - SQL_DB=currency
-      - SQL_PWD=Margery@123
+      - SQL_PWD=*****
       - EXCHANGE_SERVICE_HOST=172.16.15.111
     networks:
       gameOfContainers:

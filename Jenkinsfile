@@ -1,5 +1,4 @@
-pipeline{
-    agent any
+node (jenkins-slave-1){
     stages{        
         stage('Build Jars'){
             steps{

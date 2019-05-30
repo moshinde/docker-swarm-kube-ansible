@@ -1,4 +1,5 @@
-node (jenkins-slave-1){
+pipeline {
+    agent { label 'ci_jenkinsnodejava' }
     stages{        
         stage('Build Jars'){
             steps{

@@ -23,6 +23,8 @@ pipeline {
         stage('Build Docker Image'){
             steps{
                 script {
+					echo "who am i?"
+                    sh "whoami"
                     dir('currency-exchange-service'){
                         exchange_image=docker.build("monicashinde3/currency-exchange-service")
                     }

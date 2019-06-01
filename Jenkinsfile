@@ -2,7 +2,7 @@ pipeline {
 
     stages{        
         stage('Build Jars'){
-            agent(label 'jenkins-slave-1'){}
+            agent{ label 'jenkins-slave-1'}
             steps{
                 echo 'Building currency exchange service'
                 dir('currency-exchange-service') {
@@ -17,14 +17,14 @@ pipeline {
         }
         
         stage('Test'){
-            agent(label 'jenkins-slave-1'){}
+            agent{ label 'jenkins-slave-1'}
             steps{
                 echo 'Perform tests'
             }
         }
         
         stage('Build Docker Image'){
-            agent(label 'jenkins-slave-1'){}
+            agent{ label 'jenkins-slave-1'}
             steps{
                 script {
                     echo "who am i?"
@@ -41,7 +41,7 @@ pipeline {
         }
 
         stage('Push to Docker hub'){
-            agent(label 'jenkins-slave-1'){}
+            agent{ label 'jenkins-slave-1'}
             steps{
                 script {
                     withDockerRegistry([ credentialsId: "docker-hub-user", url: "" ]){
@@ -53,7 +53,7 @@ pipeline {
         }
 
         stage('Deploy in container'){
-            agent(label 'jenkins-slave-2'){}
+            agent{ label 'jenkins-slave-2'}
             steps{
                 script{
                     checkout scm

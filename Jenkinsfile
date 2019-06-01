@@ -17,14 +17,14 @@ pipeline {
         }
         
         stage('Test'){
-            
+            agent{ label 'jenkins-slave-1'}
             steps{
                 echo 'Perform tests'
             }
         }
         
         stage('Build Docker Image'){
-            
+            agent{ label 'jenkins-slave-1'}
             steps{
                 script {
                     echo "who am i?"
@@ -41,7 +41,7 @@ pipeline {
         }
 
         stage('Push to Docker hub'){
-            
+            agent{ label 'jenkins-slave-1'}
             steps{
                 script {
                     withDockerRegistry([ credentialsId: "docker-hub-user", url: "" ]){
